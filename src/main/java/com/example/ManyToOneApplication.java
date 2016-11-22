@@ -14,8 +14,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.example.model.Addr;
 import com.example.model.Dept;
 import com.example.model.Emp;
+import com.example.model.Hobby;
 import com.example.repository.AddrRepository;
 import com.example.repository.DeptRepository;
+import com.example.repository.EmpRepository;
 
 @SpringBootApplication
 public class ManyToOneApplication implements CommandLineRunner {
@@ -28,6 +30,9 @@ public class ManyToOneApplication implements CommandLineRunner {
 	@Autowired
 	private AddrRepository addrRepository;
 	
+	@Autowired
+	private EmpRepository empRepository;
+	
 	@Override
 	@Transactional
 	public void run(String... arg0) throws Exception {
@@ -38,6 +43,28 @@ public class ManyToOneApplication implements CommandLineRunner {
 //		testFindAll();
 		
 		testOneToOne();
+		
+		testManyToMany();
+	}
+
+	private void testManyToMany() {
+		
+		Emp e1 = empRepository.findOne(1L);
+		e1.setEname("hasHobby");
+//		e1.getHobbies().add(new Hobby("hobby1"));
+//		e1.getHobbies().add(new Hobby("hobby2"));
+		e1.setHobbies(new ArrayList<Hobby>() {
+			{
+				add(new Hobby("hobby1"));
+				add(new Hobby("hobby2"));
+			}
+		});
+		empRepository.save(new ArrayList<Emp>() {
+			{
+				add(e1);
+			}
+		});
+		empRepository.flush();
 	}
 
 	private void testOneToOne() {
