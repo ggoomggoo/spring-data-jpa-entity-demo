@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -32,6 +34,8 @@ public class Dept {
 	
 	@NonNull
 	@OneToMany(mappedBy="dept", cascade=CascadeType.ALL)
+	@OrderBy("dname DESC")
+	@OrderColumn(name="emp_index")
 	private Set<Emp> emps;
 
 	public Dept(String dname) {

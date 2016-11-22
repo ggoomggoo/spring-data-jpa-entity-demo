@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.model.Addr;
 import com.example.model.Dept;
 import com.example.model.Emp;
+import com.example.repository.AddrRepository;
 import com.example.repository.DeptRepository;
 
 @SpringBootApplication
@@ -23,6 +25,9 @@ public class ManyToOneApplication implements CommandLineRunner {
 	@Autowired
 	private DeptRepository deptRepository;
 	
+	@Autowired
+	private AddrRepository addrRepository;
+	
 	@Override
 	@Transactional
 	public void run(String... arg0) throws Exception {
@@ -31,6 +36,19 @@ public class ManyToOneApplication implements CommandLineRunner {
 		testFindAll();
 //		testDelete();
 //		testFindAll();
+		
+		testOneToOne();
+	}
+
+	private void testOneToOne() {
+		Dept d1 = deptRepository.findOne(1L);
+//		HashSet<Emp> emps = (HashSet<Emp>) d1.getEmps();
+//		for (Emp emp : emps) {
+		for (Emp emp : d1.getEmps()) {
+			Addr addr = new Addr("juso");
+			addr.setEmp(emp);
+			addrRepository.save(addr);
+		}
 	}
 
 	private void testDelete() {
