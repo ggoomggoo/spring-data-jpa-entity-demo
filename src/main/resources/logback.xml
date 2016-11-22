@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %-3level %logger{5} -
+				%msg %n</pattern>
+		</encoder>
+	</appender>
+	<logger name="jdbc" level="OFF" />
+	<!-- Logger에 대한 로그 레벨은 DEBUG, INFO, ERROR중 하나를 선택 DEBUG : 실행 클래스명과 Line 
+		번호를 로그로 INFO : SQL문 자체만 로그로 ERROR : SQL문에서 에러가 발생하면 Stack Trace 정보룰 보여준다 -->
+	<!-- SQL문만을 로그로 남기며 PreparedStatement의 경우 바인딩된 파라미터 값이 포함되어 SQL문 출력 -->
+	<logger name="jdbc.sqlonly" level="INFO" additivity="false">
+		>
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<!-- 실행된 SQL문과 실행된 시간 정보를 표시 -->
+	<logger name="jdbc.sqltiming" level="INFO" additivity="false">
+		>
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<!-- SELECT결과를 테이블형태로 표시 -->
+	<logger name="jdbc.resultsettable" level="INFO" additivity="false">
+		>
+		<appender-ref ref="STDOUT" />
+	</logger>
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
