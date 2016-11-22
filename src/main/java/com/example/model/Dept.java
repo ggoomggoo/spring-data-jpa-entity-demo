@@ -9,57 +9,34 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 @Entity
 @Table(name="dept")
+@RequiredArgsConstructor
+@Getter
+@Setter
+@ToString(exclude={"emps"}) // 
 public class Dept {
+	
+	@Id
+	@GeneratedValue
 	private Long deptno;
+	
+	@NonNull
 	private String dname;
+	
+	@NonNull
+	@OneToMany(mappedBy="dept", cascade=CascadeType.ALL)
 	private Set<Emp> emps;
-	
-	public Dept() {
-	}
-	
+
 	public Dept(String dname) {
 		super();
 		this.dname = dname;
-	}
-
-	public Dept(String dname, Set<Emp> emps) {
-		super();
-		this.dname = dname;
-		this.emps = emps;
-	}
-
-	@Id
-	@GeneratedValue
-	public Long getDeptno() {
-		return deptno;
-	}
-
-	public void setDeptno(Long deptno) {
-		this.deptno = deptno;
-	}
-
-	public String getDname() {
-		return dname;
-	}
-
-	public void setDname(String dname) {
-		this.dname = dname;
-	}
-
-	@OneToMany(mappedBy="dept", cascade=CascadeType.ALL)
-	public Set<Emp> getEmps() {
-		return emps;
-	}
-
-	public void setEmps(Set<Emp> emps) {
-		this.emps = emps;
-	}
-
-	@Override
-	public String toString() {
-		return "Dept [deptno=" + deptno + ", dname=" + dname + ", emps=" + emps + "]";
 	}
 	
 }

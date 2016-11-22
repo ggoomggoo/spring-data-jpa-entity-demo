@@ -29,8 +29,8 @@ public class ManyToOneApplication implements CommandLineRunner {
 		testLog();
 		testInsert();
 		testFindAll();
-		testDelete();
-		testFindAll();
+//		testDelete();
+//		testFindAll();
 	}
 
 	private void testDelete() {
